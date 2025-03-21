@@ -1,22 +1,40 @@
 package com.institute.college.controller;
 
+import com.institute.college.model.Student;
 import com.institute.college.model.Test;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.institute.college.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/main")
+@RequestMapping("/college")
 public class Controller {
-    @GetMapping("/get")
-    public Test getTest(){
-        Test test1=new Test();
-       // test1.setTest("cbcgnbg");
-        return test1;
-    }
+    @Autowired
+    StudentService studentService;
+
     @RequestMapping(value = "/greet", method = RequestMethod.GET)
     public String greet() {
         return "Hello, welcome to the API!";
     }
+
+    @GetMapping
+    public List<Student> getAllUsers() {
+        return studentService.getAllUsers();
+    }
+
+    @PostMapping("addStudent")
+    public Student addStudent(@RequestBody Student user) {
+        return studentService.saveUser(user);
+    }
+
+    @PutMapping()
+    public Student updateStandard(@RequestBody Student updatedStudent) {
+        return studentService.updateStandard(updatedStudent);
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id){ return studentService.deleteUser(id);}
 }

@@ -13,13 +13,11 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
-    @GetMapping
-    public List<Student> getAllUsers() {
-        return studentService.getAllUsers();
+
+    @GetMapping("/getData")
+    public Student getStudent(@RequestParam Long id) {
+        return studentService.getStudent(id);
     }
 
-    @PostMapping("addStudent")
-    public Student createUser(@RequestBody Student user) {
-        return studentService.saveUser(user);
-    }
+
 }
